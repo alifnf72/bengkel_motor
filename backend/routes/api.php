@@ -17,6 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
     Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products/{product}/image', [ProductController::class, 'image']);
 
     Route::middleware(EnsureRole::class . ':admin,gudang')->group(function () {
         Route::post('/products', [ProductController::class, 'store']);

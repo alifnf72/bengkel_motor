@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\StockMovement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -26,6 +27,7 @@ class ProductController extends Controller
             'sku' => 'required|string|max:50|unique:products,sku',
             'barcode' => 'nullable|string|max:50|unique:products,barcode',
             'kategori' => 'nullable|string|max:50',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
             'harga_beli' => 'nullable|integer|min:0',
             'harga_jual' => 'required|integer|min:0',
             'stok' => 'nullable|integer|min:0',
@@ -33,16 +35,28 @@ class ProductController extends Controller
             'is_jasa' => 'nullable|boolean',
             'is_public' => 'nullable|boolean',
         ]);
+        $image = $data['gambar'] ?? null;
+        unset($data['gambar']);
         $data = array_filter($data, fn ($v) => $v !== null && $v !== '');
+        if ($image) {
+            $data['gambar_path'] = $image->store('products', 'local');
+        }
 
-        $product = DB::transaction(function () use ($data, $request) {
-            $p = Product::create($data);
-            if (($data['stok'] ?? 0) > 0) {
-                StockMovement::create(['product_id' => $p->id, 'perubahan' => $data['stok'], 'alasan' => 'Stok awal', 'user_id' => $request->user()->id]);
+        try {
+            $product = DB::transaction(function () use ($data, $request) {
+                $p = Product::create($data);
+                if (($data['stok'] ?? 0) > 0) {
+                    StockMovement::create(['product_id' => $p->id, 'perubahan' => $data['stok'], 'alasan' => 'Stok awal', 'user_id' => $request->user()->id]);
+                }
+
+                return $p;
+            });
+        } catch (\Throwable $e) {
+            if (!empty($data['gambar_path'])) {
+                Storage::disk('local')->delete($data['gambar_path']);
             }
-
-            return $p;
-        });
+            throw $e;
+        }
 
         return response()->json($product, 201);
     }
@@ -54,14 +68,31 @@ class ProductController extends Controller
             'sku' => ['sometimes', 'string', 'max:50', Rule::unique('products', 'sku')->ignore($product->id)],
             'barcode' => ['nullable', 'string', 'max:50', Rule::unique('products', 'barcode')->ignore($product->id)],
             'kategori' => 'sometimes|string|max:50',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
             'harga_beli' => 'sometimes|integer|min:0',
             'harga_jual' => 'sometimes|integer|min:0',
             'stok_min' => 'sometimes|integer|min:0',
             'is_public' => 'sometimes|boolean',
         ]);
+        $image = $data['gambar'] ?? null;
+        unset($data['gambar']);
+        $oldImage = $product->gambar_path;
+        if ($image) {
+            $data['gambar_path'] = $image->store('products', 'local');
+        }
         $product->update($data);
+        if ($image && $oldImage) {
+            Storage::disk('local')->delete($oldImage);
+        }
 
         return $product;
+    }
+
+    public function image(Product $product)
+    {
+        abort_unless($product->gambar_path && Storage::disk('local')->exists($product->gambar_path), 404);
+
+        return Storage::disk('local')->response($product->gambar_path);
     }
 
     // Barang masuk (qty positif) atau koreksi (qty negatif).
