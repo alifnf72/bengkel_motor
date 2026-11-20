@@ -57,4 +57,12 @@ npm run dev                    # buka http://localhost:3000
 | GET | /api/reports/today | admin |
 
 ## Deploy
-Backend ke hosting PHP/VPS (isi `.env` produksi: `APP_ENV=production`, `APP_DEBUG=false`, kredensial MySQL, lalu `php artisan migrate --force`). Frontend ke Vercel atau hosting Node, dengan `NEXT_PUBLIC_API_URL` menunjuk ke alamat API produksi. Batasi `allowed_origins` di `backend/config/cors.php` ke domain frontend Anda.
+
+### Frontend ke Vercel
+1. Impor repository GitHub `alifnf72/bengkel_motor` ke Vercel.
+2. Atur **Root Directory** ke `frontend` (framework akan terdeteksi sebagai Next.js).
+3. Untuk demo showcase tanpa backend, tambahkan Environment Variable `NEXT_PUBLIC_DEMO_MODE=true`. Mode ini memakai data contoh dan semua perubahan hanya sementara di sesi browser.
+4. Deploy. Setiap perubahan baru ke branch `main` akan memicu deployment berikutnya.
+
+### Backend Laravel
+Untuk aplikasi operasional, backend harus di-host terpisah pada hosting PHP/VPS dengan MySQL. Atur `NEXT_PUBLIC_DEMO_MODE=false` dan `NEXT_PUBLIC_API_URL` ke URL Laravel publik yang berakhiran `/api`. Atur `.env` backend produksi (`APP_ENV=production`, `APP_DEBUG=false`, kredensial database), jalankan `php artisan migrate --force`, dan izinkan domain frontend Vercel di konfigurasi CORS Laravel. Mode demo tidak memerlukan backend.

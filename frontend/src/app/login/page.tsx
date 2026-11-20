@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { api } from "@/lib/api";
+import { api, DEMO_MODE } from "@/lib/api";
 
 export default function Login() {
   const router = useRouter();
@@ -27,7 +27,8 @@ export default function Login() {
     <main className="grid min-h-screen place-items-center p-5">
       <form onSubmit={masuk} className="card flex w-full max-w-sm flex-col gap-3">
         <h1 className="text-xl font-bold">Masuk ke kasir</h1>
-        <p className="text-sm text-mut">Khusus pemilik dan karyawan bengkel.</p>
+        <p className="text-sm text-mut">{DEMO_MODE ? "Mode demo untuk melihat fitur kasir, stok, dan laporan." : "Khusus pemilik dan karyawan bengkel."}</p>
+        {DEMO_MODE && <div className="rounded-xl border border-line bg-bg p-3 text-sm"><b>Akun demo</b><p className="mt-1 text-mut">admin@bengkel.test / password</p><button type="button" className="mt-2 text-ac" onClick={() => { setEmail("admin@bengkel.test"); setPassword("password"); }}>Isi akun demo</button></div>}
         <label className="text-sm">Email<input className="input mt-1" type="email" autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} autoFocus /></label>
         <label className="text-sm">Kata sandi<input className="input mt-1" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} /></label>
         <p className="min-h-5 text-sm text-bad">{err}</p>

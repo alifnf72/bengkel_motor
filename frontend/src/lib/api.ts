@@ -1,7 +1,11 @@
+import { demoApi } from "@/lib/demo";
+
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api";
+export const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
 
 // Pemanggil API Laravel. Token login disimpan di localStorage dan dikirim sebagai Bearer.
 export async function api<T = any>(path: string, opts: { method?: string; body?: unknown } = {}): Promise<T> {
+  if (DEMO_MODE) return demoApi<T>(path, opts);
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
   let res: Response;
   try {
@@ -20,6 +24,7 @@ export async function api<T = any>(path: string, opts: { method?: string; body?:
 }
 
 export async function apiBlob(path: string): Promise<Blob> {
+  if (DEMO_MODE) throw new Error("Foto unggahan tidak tersedia pada mode demo.");
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
   let res: Response;
   try {

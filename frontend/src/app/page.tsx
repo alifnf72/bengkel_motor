@@ -4,12 +4,15 @@ import { rp } from "@/lib/format";
 import { productImage } from "@/lib/product-image";
 import { Reveal } from "@/components/Reveal";
 import { HeroImage } from "@/components/HeroImage";
+import { DEMO_PRODUCTS } from "@/lib/demo";
+import { DEMO_MODE } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
 
 type Pub = { id: number; nama: string; kategori: string; harga_jual: number; is_jasa: boolean; tersedia: boolean };
 
 async function getProducts(): Promise<Pub[]> {
+  if (DEMO_MODE) return DEMO_PRODUCTS.slice(0, 8).map((p) => ({ id: p.id, nama: p.nama, kategori: p.kategori, harga_jual: p.harga_jual, is_jasa: p.is_jasa, tersedia: p.stok > 0 }));
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api"}/public/products`, { cache: "no-store", headers: { Accept: "application/json" } });
     if (!res.ok) return [];

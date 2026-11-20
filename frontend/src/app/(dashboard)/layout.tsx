@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { api } from "@/lib/api";
+import { api, DEMO_MODE } from "@/lib/api";
 import type { User } from "@/lib/types";
 
 const MENU = [
@@ -38,7 +38,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <Link href="/" className="rounded-xl px-3 py-3 text-sm text-mut">Profil bengkel</Link>
         <button onClick={keluar} className="rounded-xl px-3 py-3 text-left text-sm text-mut">Keluar</button>
       </aside>
-      <main className="flex-1 p-4">{children}</main>
+      <main className="flex-1 p-4">{DEMO_MODE && <div className="mb-4 rounded-xl border border-ac/30 bg-ac/10 px-4 py-2 text-sm text-ac">Mode demo · data contoh hanya tersimpan sementara di sesi browser ini.</div>}{children}</main>
     </div>
   );
 }
