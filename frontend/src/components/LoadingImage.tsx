@@ -10,7 +10,7 @@ export function LoadingImage({ src, alt, containerClassName, imageClassName, onE
   imageClassName: string;
   onError?: () => void;
   loading?: "eager" | "lazy";
-  hostRef?: RefObject<HTMLDivElement | null>;
+  hostRef?: RefObject<HTMLDivElement>;
   isLoading?: boolean;
 }) {
   const imageRef = useRef<HTMLImageElement>(null);
