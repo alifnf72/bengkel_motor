@@ -68,9 +68,13 @@ export default function ProfilToko() {
       } else {
         const form = new FormData();
         Object.entries(profile).forEach(([key, value]) => {
-          if (key === "hero_image" || key === "logo_image") return;
-          if (key === "highlights") value.forEach((item, index) => Object.entries(item).forEach(([field, content]) => form.set(`highlights[${index}][${field}]`, String(content))));
-          else form.set(key, String(value ?? ""));
+          if (key === "hero_image" || key === "logo_image" || key === "highlights") return;
+          form.set(key, String(value ?? ""));
+        });
+        profile.highlights.forEach((item, index) => {
+          form.set(`highlights[${index}][no]`, item.no);
+          form.set(`highlights[${index}][title]`, item.title);
+          form.set(`highlights[${index}][desc]`, item.desc);
         });
         if (heroFile) form.set("hero_upload", heroFile);
         if (logoFile) form.set("logo_upload", logoFile);
