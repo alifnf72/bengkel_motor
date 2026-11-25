@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { api, DEMO_MODE } from "@/lib/api";
+import { LoadingText } from "@/components/LoadingText";
 
 export default function Login() {
   const router = useRouter();
@@ -16,9 +17,9 @@ export default function Login() {
     if (!email || !password) return setErr("Isi email dan kata sandi.");
     setBusy(true); setErr("");
     try {
-      const r = await api<{ token: string }>("/login", { method: "POST", body: { email, password } });
+      const r = await api<{ token: string; user: { role: string } }>("/login", { method: "POST", body: { email, password } });
       localStorage.setItem("token", r.token);
-      router.push("/kasir");
+      router.push(r.user.role === "admin" ? "/dashboard" : "/kasir");
     } catch (e) { setErr((e as Error).message); }
     setBusy(false);
   }
@@ -32,7 +33,7 @@ export default function Login() {
         <label className="text-sm">Email<input className="input mt-1" type="email" autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} autoFocus /></label>
         <label className="text-sm">Kata sandi<input className="input mt-1" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} /></label>
         <p className="min-h-5 text-sm text-bad">{err}</p>
-        <button className="btn-pri" disabled={busy}>{busy ? "Memeriksa…" : "Masuk"}</button>
+        <button className="btn-pri" disabled={busy}>{busy ? <LoadingText label="Memeriksa…" light /> : "Masuk"}</button>
         <Link href="/" className="btn flex items-center justify-center">Kembali ke profil bengkel</Link>
       </form>
     </main>

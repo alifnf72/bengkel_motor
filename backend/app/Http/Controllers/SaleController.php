@@ -20,7 +20,7 @@ class SaleController extends Controller
             'items.*.id' => 'required|integer|exists:products,id',
             'items.*.qty' => 'required|integer|min:1|max:10000',
             'diskon' => 'nullable|integer|min:0',
-            'metode' => 'required|in:Tunai,Transfer,QRIS',
+            'metode' => 'required|in:Tunai,Transfer,Transfer BCA,Transfer BRI,Transfer BNI,Transfer Mandiri,Transfer BSI,E-Wallet DANA,E-Wallet OVO,E-Wallet GoPay,E-Wallet ShopeePay,QRIS',
             'dibayar' => 'nullable|integer|min:0',
         ]);
 

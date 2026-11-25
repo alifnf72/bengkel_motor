@@ -1,15 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { LoadingImage } from "@/components/LoadingImage";
 
-export function HeroImage() {
+export function HeroImage({ src }: { src?: string | null }) {
   const [failed, setFailed] = useState(false);
-  return (
-    <img
-      src={failed ? "/images/hero-parts.svg" : "/images/hero-bengkel.png"}
-      alt={failed ? "Ilustrasi ban dan onderdil motor" : "Toko Akay Ban dan produk onderdil motor"}
-      onError={() => setFailed(true)}
-      className="aspect-[1.12/1] w-full object-cover"
-    />
-  );
+  const imageSrc = src || "/images/hero-bengkel.png";
+  useEffect(() => { setFailed(false); }, [imageSrc]);
+  return <LoadingImage
+    src={failed ? "/images/hero-parts.svg" : imageSrc}
+    alt={failed ? "Ilustrasi ban dan onderdil motor" : "Toko Akay Ban dan produk onderdil motor"}
+    onError={() => setFailed(true)}
+    loading="eager"
+    containerClassName="aspect-[1.12/1] w-full"
+    imageClassName="h-full w-full object-cover"
+  />;
 }

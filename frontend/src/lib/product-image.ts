@@ -9,6 +9,8 @@ const images: Record<string, string> = {
   lampu: "/images/products/lampu.svg",
 };
 
+export const NO_PRODUCT_PHOTO = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+
 export function productImage(category: string): string {
   const normalized = category.trim().toLocaleLowerCase("id-ID");
   return images[normalized] ?? "/images/products/lainnya.svg";

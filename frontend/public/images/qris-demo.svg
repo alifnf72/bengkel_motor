@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="420" viewBox="0 0 360 420" role="img" aria-labelledby="title desc">
+  <title id="title">QRIS Demo</title>
+  <desc id="desc">Kode QRIS dummy yang tidak bisa digunakan untuk pembayaran.</desc>
+  <rect width="360" height="420" rx="28" fill="#fff"/>
+  <rect x="22" y="22" width="316" height="376" rx="20" fill="#fff" stroke="#e2e5ec" stroke-width="2"/>
+  <text x="180" y="58" fill="#151a2c" font-family="Arial,sans-serif" font-size="17" font-weight="700" text-anchor="middle">AKAY BAN · QRIS</text>
+  <g fill="#151a2c">
+    <path d="M60 82h78v78H60zm12 12v54h54V94zm12 12h30v30H84zM222 82h78v78h-78zm12 12v54h54V94zm12 12h30v30h-30zM60 244h78v78H60zm12 12v54h54v-54zm12 12h30v30H84z"/>
+    <path d="M158 86h18v18h-18zm26 0h18v18h-18zm-26 26h18v18h-18zm34 0h18v18h-18zm-34 26h18v18h-18zm26 0h18v18h-18zm26 18h18v18h-18zm-52 26h18v18h-18zm26 0h18v18h-18zm26 0h18v18h-18zm-52 26h18v18h-18zm26 0h18v18h-18zm52 0h18v18h-18zm26 0h18v18h-18zm-104 26h18v18h-18zm26 0h18v18h-18zm26 0h18v18h-18zm52 0h18v18h-18zm26 0h18v18h-18zm-78 26h18v18h-18zm26 0h18v18h-18zm52 0h18v18h-18zm26 0h18v18h-18zm-104 26h18v18h-18zm26 0h18v18h-18zm26 0h18v18h-18zm52 0h18v18h-18z"/>
+  </g>
+  <rect x="112" y="174" width="136" height="54" rx="12" fill="#ff5a36" stroke="#fff" stroke-width="8"/>
+  <text x="180" y="208" fill="#fff" font-family="Arial,sans-serif" font-size="23" font-weight="900" text-anchor="middle">DEMO</text>
+  <text x="180" y="356" fill="#151a2c" font-family="Arial,sans-serif" font-size="18" font-weight="800" text-anchor="middle">BUKAN QR PEMBAYARAN</text>
+  <text x="180" y="382" fill="#72798c" font-family="Arial,sans-serif" font-size="12" text-anchor="middle">Gunakan hanya untuk simulasi kasir</text>
+</svg>

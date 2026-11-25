@@ -88,6 +88,17 @@ class ProductController extends Controller
         return $product;
     }
 
+    public function destroy(Product $product)
+    {
+        $imagePath = $product->gambar_path;
+        $product->delete();
+        if ($imagePath) {
+            Storage::disk('local')->delete($imagePath);
+        }
+
+        return response()->json(['message' => 'Produk berhasil dihapus.']);
+    }
+
     public function image(Product $product)
     {
         abort_unless($product->gambar_path && Storage::disk('local')->exists($product->gambar_path), 404);
