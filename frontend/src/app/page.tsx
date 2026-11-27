@@ -70,7 +70,7 @@ export default function Home() {
       </div></section>
 
       <section id="kontak" className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20"><div className="grid gap-8 rounded-3xl border border-line bg-card p-7 md:grid-cols-[1fr_1.1fr] md:p-10"><Reveal><div><p className="text-xs font-bold uppercase tracking-[.2em] text-ac">Mampir atau hubungi kami</p><h2 className="mt-3 text-3xl font-extrabold md:text-4xl">Kami siap bantu perjalanan Anda.</h2><a className="mt-6 inline-flex rounded-xl bg-ac px-5 py-3 font-bold text-white" href={`https://wa.me/${shop.wa}`} target="_blank" rel="noopener noreferrer">Chat WhatsApp</a></div></Reveal><div className="grid gap-3 sm:grid-cols-2"><Reveal><div className="h-full rounded-2xl border border-line bg-bg p-5"><span className="text-ac">Alamat</span><p className="mt-2 text-sm leading-6 text-mut">{shop.alamat}</p></div></Reveal><Reveal delay={100}><div className="h-full rounded-2xl border border-line bg-bg p-5"><span className="text-ac">Jam operasional</span><p className="mt-2 text-sm leading-6 text-mut">{shop.jam}</p></div></Reveal><Reveal delay={200} className="sm:col-span-2"><div className="h-full rounded-2xl border border-line bg-bg p-5"><span className="text-ac">Telepon / WhatsApp</span><p className="mt-2 text-sm text-mut">{shop.telp}</p></div></Reveal></div></div></section>
-      <footer className="border-t border-line px-5 py-6 text-center text-sm text-mut">© 2026 {shop.nama} · Toko onderdil motor</footer>
+      <footer className="border-t border-line px-5 py-6 text-center text-sm text-mut">© 2026 alif_nurfirdaus</footer>
     </main>
   );
 }
